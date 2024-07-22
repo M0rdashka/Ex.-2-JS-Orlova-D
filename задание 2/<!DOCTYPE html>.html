@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задания JS №2</title>
+    <script src="script2.js" defer></script>
+    <style>
+        div {
+            margin-top: 20px;
+        }
+        span[id="res"] {
+            color: rgb(21, 140, 145);
+            font-size: 2rem;
+        }
+        .calendar4ik {
+            margin-right: 30%;
+            margin-left: 30%;
+            margin-top: 10%;
+            margin-bottom: 10%;
+            background-color: rgb(193, 159, 226);
+            border-radius: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: aliceblue;
+            border: 3px solid grey;
+            padding-left: 5%;
+            padding-top: 2%;
+            padding-bottom: 2%;
+            padding-right: 5%;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: rgb(6, 8, 158);
+        }
+        .vowel {
+            color: rgb(125, 148, 140);
+            font-weight: bold;
+        }
+        .consonant {
+            color: rgb(184, 94, 169);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+  <div class="calendar4ik">
+    <h2>Наш такой странный русский язык</h2>
+    <label for="textInput">Введите текст</label>
+    <input type="text" id="textInput">
+    <button id="countButton">Разобрать</button> 
+    <div class="result" id="resultOutput"></div>
+  </div>
+</body>
+</html>
+<body>
