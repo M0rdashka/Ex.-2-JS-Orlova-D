@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Матрица</title>
+</head>
+<body>
+    <div class="content" id="content">
+        <button class="matrix-red" onclick="rotateBody()">Остановись</button> 
+        <button class="image-button" onclick="getLocation()" title="Раскрой тайну"></button>
+        <button class="matrix-blue" onclick="stopWatching()">Остановись</button> 
+        <div id="runblock">
+            <p id="location" style="color: chartreuse;"></p> 
+        </div> 
+    </div> 
+    <style>
+         body {
+            background-image: url(https://external-preview.redd.it/V617edfnLkINuSbsWeNqmm0tvlhXGAeSasgUPyX03BA.jpg?auto=webp&s=c4bee02eab80a2f8a4615bb7eab44d6325ec5ae7);
+            background-color: black;
+            background-repeat: no-repeat;
+            background-position: center top;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; 
+        }
+        .content {
+            text-align: center;
+            margin-top: 180px;
+        }     
+        #runblock{
+            width: 300px;
+            height: 300px;
+            position: absolute;
+        }    
+        .image-button {
+            margin-left:20%;
+            padding: 10px 20px; 
+            margin: 10px; 
+            width: 100px;
+            height: 100px;
+            border: none;
+            background: none;
+            background-image: url(https://www.pngall.com/wp-content/uploads/4/Pokemon-Pokeball-Transparent.png);
+            background-size: cover;
+            opacity: 0.33;
+            position:relative;
+            float: left;
+        }
+        .matrix-red:hover,
+        .matrix-blue:hover,
+        .image-button:hover {
+            opacity: 0.8;
+        }
+        .matrix-red:active,
+        .matrix-blue:active,
+        .image-button:active {
+            transform: scale(0.95);
+        }
+        .matrix-red {
+            background-color: rgb(250, 0, 0);
+            border-radius: 50%; 
+            border-color:rgba(141, 51, 18, 0.664);
+            width:auto;
+            height: 5%;
+            text-align: 20px;
+            color: rgba(200, 206, 206, 0.514);
+            margin-top: 30%;
+            margin-left: 30%;
+            opacity: 0.33;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            margin: 10px; 
+            position:relative;
+            float: left;
+        }
+        .matrix-blue {
+            background-color: rgb(6, 94, 129);
+            border-radius: 50%; 
+            border-color:rgba(12, 61, 136, 0.664);
+            width:auto;
+            height: 5%;
+            text-align: 20px;
+            color: rgba(200, 206, 206, 0.514);
+            margin-left: 62%;
+            margin-top: -3.5%;
+            opacity: 0.33;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px 20px; 
+            margin: 10px; 
+            position:relative;
+            float: right;
+        }
+        p {
+                position:absolute;
+                margin-left: 50%;
+                padding: 10px;
+                border-radius: 5px;
+                border: none;
+
+        }
+    </style>
+    <script>
+        let isRotated = false;
+        let watchID;
+
+        function rotateBody() {
+            if (isRotated) {
+                document.body.style.transform = 'rotate(0deg)';
+                document.body.style.direction = "ltr";
+            } else {
+                document.body.style.transform = 'rotate(180deg)';
+                document.body.style.direction = "rtl";
+            }
+            isRotated = !isRotated;
+        }
+
+        function getLocation() {
+            // If geolocation is supported by the browser
+            if (navigator.geolocation) {
+                watchID = navigator.geolocation.watchPosition(showPosition, showError, {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                });
+            } else {
+                document.getElementById("location").innerHTML = "Геолокация не поддерживается.";
+            }
+        }
+
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            document.getElementById("location").innerHTML = "Широта: " + lat + "<br>Долгота: " + lon;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "Пользователь отклонил запрос на геолокацию.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "Информация о местоположении недоступна.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "Запрос на геолокацию истек.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "Произошла неизвестная ошибка.";
+                    break;
+            }
+        }
+
+        function stopWatching() {
+            if (watchID) {
+                navigator.geolocation.clearWatch(watchID);
+                watchID = null; // reset watchID to prevent multiple clearing
+                document.getElementById("location").innerHTML += "<br>Отслеживание местоположения остановлено.";
+            }
+        }
+        var elemLeft, elemTop, maxElemLeft, maxElemTop, elem;
+
+        elem = document.getElementById('runblock');
+
+        maxElemLeft = document.documentElement.clientWidth - elem.offsetWidth;
+        maxElemTop = document.documentElement.clientHeight - elem.offsetHeight;
+
+elem.onmousemove = handler;
+
+function handler() {
+  elemLeft = Math.random() * maxElemLeft;
+  elem.style.left = elemLeft + 'px';
+  elemTop = Math.random() * maxElemTop;
+  elem.style.top = elemTop + 'px';
+}
+    </script>
+</body>
+</html>
